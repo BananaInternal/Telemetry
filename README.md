@@ -4,6 +4,8 @@ Telemetry in software, provides useful information for developers and maintainer
 
 This project aims to evaluate and discover the features of telemetry frameworks and apply them to an existing prototype written in c++.
 
+## Tasks
+
 The tasks are as follows:
 
 - Evaluate various telemetry frameworks and choose the best one.  
@@ -14,3 +16,10 @@ The tasks are as follows:
 - Apply telemetry to the prototype
 - Analyze the telemetry results
 - Each step for deployment and integration must be documented
+
+## Requirements
+
+Use of Qt 6.4.0
+Our infrastructure has space on a shared server or on a hosted server.
+In case the framework must be installed on the hosted server, everything regarding the framework must be "dockerized".
+Everything server side must be highly optimized.
