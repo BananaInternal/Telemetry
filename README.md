@@ -20,6 +20,6 @@ The tasks are as follows:
 ## Requirements
 
 Use of Qt 6.4.0
-Our infrastructure has space on a shared server or on a hosted server.
-In case the framework must be installed on the hosted server, everything regarding the framework must be "dockerized".
+Our infrastructure has space on a shared server or on a hosted server.  
+In any case, the development environment for the server side of the framework must be dockerized.  
 Everything server side must be highly optimized.
