@@ -138,7 +138,7 @@ if(BAN_USE_KUSERFEEDBACK)
             c_extra_modules
             DEPENDS zlib_make
             DOWNLOAD_DIR ${CMAKE_LIBRARY_TMP_SOURCES}/cmake-extra
-            DOWNLOAD_EXTRACT_TIMESTAMP true
+            #DOWNLOAD_EXTRACT_TIMESTAMP true
             URL https://github.com/KDE/extra-cmake-modules/archive/refs/heads/master.zip
             LIST_SEPARATOR |
             CMAKE_ARGS
@@ -182,7 +182,7 @@ if(BAN_USE_KUSERFEEDBACK)
 
         ExternalProject_Add(kuserfeedback_make
             DOWNLOAD_DIR ${CMAKE_LIBRARY_TMP_SOURCES}/kuserfeedback
-            DOWNLOAD_EXTRACT_TIMESTAMP true
+            #DOWNLOAD_EXTRACT_TIMESTAMP true
             URL https://invent.kde.org/libraries/kuserfeedback/-/archive/master/kuserfeedback-master.zip
             DEPENDS c_extra_modules
             BUILD_IN_SOURCE ON
