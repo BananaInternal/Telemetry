@@ -47,7 +47,7 @@ ecm_setup_version(PROJECT
 #
 # Dependencies
 #
-set (QT_MAJOR_VERSION 6)
+#set (QT_MAJOR_VERSION 6)
 find_package(Qt${QT_MAJOR_VERSION} 5.4 NO_MODULE REQUIRED COMPONENTS Core Network)
 find_package(Qt${QT_MAJOR_VERSION} NO_MODULE QUIET OPTIONAL_COMPONENTS Widgets Charts Test Qml Svg PrintSupport)
 find_package(QmlLint)

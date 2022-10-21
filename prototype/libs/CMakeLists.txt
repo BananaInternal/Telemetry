@@ -141,7 +141,7 @@ if(BAN_USE_KUSERFEEDBACK)
             c_extra_modules
             DEPENDS zlib_make
             DOWNLOAD_DIR ${CMAKE_LIBRARY_TMP_SOURCES}/cmake-extra
-            #DOWNLOAD_EXTRACT_TIMESTAMP true
+            DOWNLOAD_EXTRACT_TIMESTAMP true
             URL https://github.com/KDE/extra-cmake-modules/archive/refs/heads/master.zip
             LIST_SEPARATOR |
             CMAKE_ARGS
@@ -163,6 +163,13 @@ if(BAN_USE_KUSERFEEDBACK)
             -DCMAKE_PREFIX_PATH=${karchive_prefix}
             -DCMAKE_INSTALL_PREFIX=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
             -DZLIB_INCLUDE_DIR=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/include
+            -DENABLE_DOCS=OFF
+            -DENABLE_CONSOLE=OFF
+            -DENABLE_CLI=OFF
+            -DENABLE_PHP=OFF
+            -DENABLE_PHP_UNIT=OFF
+            -DENABLE_SURVEY_TARGET_EXPRESSIONS=OFF
+            -DQT_MAJOR_VERSION=6
         )
         if(WIN32)
             list(APPEND karchive_args
@@ -173,26 +180,27 @@ if(BAN_USE_KUSERFEEDBACK)
                 -DZLIB_LIBRARY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/lib/libz${CMAKE_SHARED_LIBRARY_SUFFIX}
             )
         endif()
-        if(APPLE)
 
-            string(REPLACE ";" "|" karchive_arch "${CMAKE_OSX_ARCHITECTURES}")
-            list(APPEND karchive_args
-                -DCMAKE_OSX_ARCHITECTURES=${karchive_arch}
-            )
-            ExternalProject_Add(kuserfeedback_make
-                DEPENDS c_extra_modules
-                SOURCE_DIR ${CMAKE_LIBRARY_TMP_SOURCES}/kuserfeedback
-                BUILD_IN_SOURCE ON
-                LIST_SEPARATOR |
-                CONFIGURE_COMMAND
-                    ${cmd_standard_conf} echo "this is a workaround" &&
-                    ${CMAKE_COMMAND} ${CMAKE_LIBRARY_TMP_SOURCES}/karchive ${karchive_args}
-                BUILD_COMMAND
-                    ${CMAKE_COMMAND} --build .
-                INSTALL_COMMAND
-                    ${CMAKE_COMMAND} --install .
-            )
-        else()
+#        if(APPLE)
+#
+#            string(REPLACE ";" "|" karchive_arch "${CMAKE_OSX_ARCHITECTURES}")
+#            list(APPEND karchive_args
+#                -DCMAKE_OSX_ARCHITECTURES=${karchive_arch}
+#            )
+#            ExternalProject_Add(kuserfeedback_make
+#                DEPENDS c_extra_modules
+#                SOURCE_DIR ${CMAKE_LIBRARY_TMP_SOURCES}/kuserfeedback
+#                BUILD_IN_SOURCE ON
+#                LIST_SEPARATOR |
+#                CONFIGURE_COMMAND
+#                    ${cmd_standard_conf} echo "this is a workaround" &&
+#                    ${CMAKE_COMMAND} ${CMAKE_LIBRARY_TMP_SOURCES}/kuserfeedback ${karchive_args}
+#                BUILD_COMMAND
+#                    ${CMAKE_COMMAND} --build .
+#                INSTALL_COMMAND
+#                    ${CMAKE_COMMAND} --install .
+#            )
+#        else()
             ExternalProject_Add(kuserfeedback_make
                 DEPENDS c_extra_modules
                 SOURCE_DIR ${CMAKE_LIBRARY_TMP_SOURCES}/kuserfeedback
@@ -201,7 +209,7 @@ if(BAN_USE_KUSERFEEDBACK)
                 CMAKE_ARGS ${karchive_args}
             )
 
-        endif()
+#        endif()
     add_dependencies(${CMAKE_PROJECT_NAME} kuserfeedback_make)
 
     endif(NOT BAN_PRECOMPILED_LIBS)
