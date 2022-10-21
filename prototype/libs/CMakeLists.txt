@@ -133,9 +133,6 @@ if(BAN_USE_KUSERFEEDBACK)
 
     if(NOT BAN_PRECOMPILED_LIBS)
         message(STATUS "building KUserFeedback")
-        file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/kuserfeedback
-            DESTINATION ${CMAKE_LIBRARY_TMP_SOURCES}
-        )
 
         ExternalProject_Add(
             c_extra_modules
@@ -162,56 +159,37 @@ if(BAN_USE_KUSERFEEDBACK)
             -DCMAKE_BUILD_TYPE=MinSizeRel
             -DCMAKE_PREFIX_PATH=${karchive_prefix}
             -DCMAKE_INSTALL_PREFIX=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
-            -DZLIB_INCLUDE_DIR=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/include
+            -DQT_MAJOR_VERSION=6
+            -DCMAKE_WARN_DEPRECATED=OFF
+        )
+        #Do not generate console, exe, docs..
+        #only the libraries for the client
+        list(APPEND karchive_args
             -DENABLE_DOCS=OFF
             -DENABLE_CONSOLE=OFF
             -DENABLE_CLI=OFF
             -DENABLE_PHP=OFF
             -DENABLE_PHP_UNIT=OFF
             -DENABLE_SURVEY_TARGET_EXPRESSIONS=OFF
-            -DQT_MAJOR_VERSION=6
         )
-        if(WIN32)
+
+        if(APPLE)
+            string(REPLACE ";" "|" apple_arch "${CMAKE_OSX_ARCHITECTURES}")
             list(APPEND karchive_args
-                -DZLIB_LIBRARY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/lib/zlib${CMAKE_STATIC_LIBRARY_SUFFIX}
-            )
-        else()
-            list(APPEND karchive_args
-                -DZLIB_LIBRARY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/lib/libz${CMAKE_SHARED_LIBRARY_SUFFIX}
+                -DCMAKE_OSX_ARCHITECTURES=${apple_arch}
             )
         endif()
 
-#        if(APPLE)
-#
-#            string(REPLACE ";" "|" karchive_arch "${CMAKE_OSX_ARCHITECTURES}")
-#            list(APPEND karchive_args
-#                -DCMAKE_OSX_ARCHITECTURES=${karchive_arch}
-#            )
-#            ExternalProject_Add(kuserfeedback_make
-#                DEPENDS c_extra_modules
-#                SOURCE_DIR ${CMAKE_LIBRARY_TMP_SOURCES}/kuserfeedback
-#                BUILD_IN_SOURCE ON
-#                LIST_SEPARATOR |
-#                CONFIGURE_COMMAND
-#                    ${cmd_standard_conf} echo "this is a workaround" &&
-#                    ${CMAKE_COMMAND} ${CMAKE_LIBRARY_TMP_SOURCES}/kuserfeedback ${karchive_args}
-#                BUILD_COMMAND
-#                    ${CMAKE_COMMAND} --build .
-#                INSTALL_COMMAND
-#                    ${CMAKE_COMMAND} --install .
-#            )
-#        else()
-            ExternalProject_Add(kuserfeedback_make
-                DEPENDS c_extra_modules
-                SOURCE_DIR ${CMAKE_LIBRARY_TMP_SOURCES}/kuserfeedback
-                BUILD_IN_SOURCE ON
-                LIST_SEPARATOR |
-                CMAKE_ARGS ${karchive_args}
-            )
-
-#        endif()
-    add_dependencies(${CMAKE_PROJECT_NAME} kuserfeedback_make)
-
+        ExternalProject_Add(kuserfeedback_make
+            DOWNLOAD_DIR ${CMAKE_LIBRARY_TMP_SOURCES}/kuserfeedback
+            DOWNLOAD_EXTRACT_TIMESTAMP true
+            URL https://invent.kde.org/libraries/kuserfeedback/-/archive/master/kuserfeedback-master.zip
+            DEPENDS c_extra_modules
+            BUILD_IN_SOURCE ON
+            LIST_SEPARATOR |
+            CMAKE_ARGS ${karchive_args}
+        )
+        add_dependencies(${CMAKE_PROJECT_NAME} kuserfeedback_make)
     endif(NOT BAN_PRECOMPILED_LIBS)
     if(NOT APPLE AND NOT WIN32)
         target_link_directories(${CMAKE_PROJECT_NAME} PUBLIC
