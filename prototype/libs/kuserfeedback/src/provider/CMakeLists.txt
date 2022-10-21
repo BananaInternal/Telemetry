@@ -1,0 +1,8 @@
+include(KDEFrameworkCompilerSettings)
+add_subdirectory(core)
+if(TARGET Qt${QT_MAJOR_VERSION}::Widgets)
+  add_subdirectory(widgets)
+endif()
+if(TARGET Qt${QT_MAJOR_VERSION}::Qml)
+  add_subdirectory(qml)
+endif()
