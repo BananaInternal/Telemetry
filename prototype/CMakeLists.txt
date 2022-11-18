@@ -57,7 +57,7 @@ qt_add_executable(mdi
     main.cpp
     mainwindow.cpp mainwindow.h
     mdichild.cpp mdichild.h
-    singleton.h singleton.cpp
+    telemetry.h telemetry.cpp
     MANUAL_FINALIZATION
 )
 

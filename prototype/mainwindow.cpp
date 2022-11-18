@@ -5,7 +5,7 @@
 
 #include "mainwindow.h"
 #include "mdichild.h"
-#include "singleton.h"
+#include "telemetry.h"
 
 
 MainWindow::MainWindow()
@@ -465,7 +465,6 @@ void MainWindow::switchLayoutDirection()
 void MainWindow::onCascadeTriggered()
 {
     mdiArea->cascadeSubWindows();
-    QUrl url("localhost::8080");
-    Singleton provider(this,url);
+    Telemetry::provider()->addDataSource(nullptr);
     //std::printf("hello");
 }
