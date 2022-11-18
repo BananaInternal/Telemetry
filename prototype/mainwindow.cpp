@@ -465,6 +465,6 @@ void MainWindow::switchLayoutDirection()
 void MainWindow::onCascadeTriggered()
 {
     mdiArea->cascadeSubWindows();
-    Telemetry::provider()->addDataSource(nullptr);
+    Telemetry::provider();//->addDataSource(nullptr);
     //std::printf("hello");
 }

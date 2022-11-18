@@ -64,6 +64,8 @@ qt_add_executable(mdi
 #############################################################################################
 # LIBRARIES
 #############################################################################################
+
+set(BAN_USE_KUSERFEEDBACK ON)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/ban_additional_libs)
 add_subdirectory(libs)
 
