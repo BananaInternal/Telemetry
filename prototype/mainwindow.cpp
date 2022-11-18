@@ -5,6 +5,8 @@
 
 #include "mainwindow.h"
 #include "mdichild.h"
+#include "singleton.h"
+
 
 MainWindow::MainWindow()
     : mdiArea(new QMdiArea)
@@ -378,7 +380,7 @@ void MainWindow::createActions()
 
     cascadeAct = new QAction(tr("&Cascade"), this);
     cascadeAct->setStatusTip(tr("Cascade the windows"));
-    connect(cascadeAct, &QAction::triggered, mdiArea, &QMdiArea::cascadeSubWindows);
+    connect(cascadeAct, &QAction::triggered, this, &MainWindow::onCascadeTriggered);
 
     nextAct = new QAction(tr("Ne&xt"), this);
     nextAct->setShortcuts(QKeySequence::NextChild);
@@ -458,4 +460,12 @@ void MainWindow::switchLayoutDirection()
         QGuiApplication::setLayoutDirection(Qt::RightToLeft);
     else
         QGuiApplication::setLayoutDirection(Qt::LeftToRight);
+}
+
+void MainWindow::onCascadeTriggered()
+{
+    mdiArea->cascadeSubWindows();
+    QUrl url("localhost::8080");
+    Singleton provider(this,url);
+    //std::printf("hello");
 }

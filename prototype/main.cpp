@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
+#include <QSettings>
 
 #include "mainwindow.h"
 
@@ -11,6 +12,9 @@ int main(int argc, char *argv[])
 {
     Q_INIT_RESOURCE(mdi);
 
+//    QSettings sets;
+//    sets.value("valuename");
+//    sets.setValue("valuename", aaa);
     QApplication app(argc, argv);
     QCoreApplication::setApplicationName("MDI Example");
     QCoreApplication::setOrganizationName("QtProject");
@@ -21,6 +25,7 @@ int main(int argc, char *argv[])
     parser.addVersionOption();
     parser.addPositionalArgument("file", "The file to open.");
     parser.process(app);
+
 
     MainWindow mainWin;
     const QStringList posArgs = parser.positionalArguments();

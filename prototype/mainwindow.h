@@ -32,6 +32,7 @@ private slots:
     void save();
     void saveAs();
     void updateRecentFileActions();
+    void onCascadeTriggered();
     void openRecentFile();
 #ifndef QT_NO_CLIPBOARD
     void cut();
