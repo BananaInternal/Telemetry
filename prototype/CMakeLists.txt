@@ -48,7 +48,7 @@ endif()
 # Qt 6 COMPONENTS and SOURCE
 #############################################################################################
 set(CMAKE_AUTOMOC ON)
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network)
 
 #############################################################################################
 # My binary
@@ -58,6 +58,7 @@ qt_add_executable(mdi
     mainwindow.cpp mainwindow.h
     mdichild.cpp mdichild.h
     telemetry.h telemetry.cpp
+    prototypeDataSource.h
     MANUAL_FINALIZATION
 )
 
@@ -73,6 +74,7 @@ target_link_libraries(mdi PUBLIC
     Qt::Core
     Qt::Gui
     Qt::Widgets
+    Qt::Network
 )
 
 #############################################################################################

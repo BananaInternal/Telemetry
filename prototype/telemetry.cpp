@@ -1,16 +1,17 @@
 #include "telemetry.h"
+#include "QtNetwork/qnetworkaccessmanager.h"
 #include <QCoreApplication>
 
 
 KUserFeedback::Provider *Telemetry::m_provider = nullptr;
 Telemetry *Telemetry::m_instance = nullptr;
 
-constexpr char c_provederUrl[] = "localhost::8080"; //to be changed
+constexpr char c_provederUrl[] = "http://localhost:8000/";
 
 Telemetry::Telemetry()
 {
     m_provider = new KUserFeedback::Provider(QCoreApplication::instance());
-    m_provider->setFeedbackServer(QUrl(c_provederUrl));// To be changed
+    m_provider->setFeedbackServer(QUrl(c_provederUrl));
     m_provider->setEnabled(true);
     m_provider->setTelemetryMode(KUserFeedback::Provider::TelemetryMode::DetailedUsageStatistics);
 }
@@ -40,4 +41,9 @@ void Telemetry::release()
         delete m_instance;
         m_instance = nullptr;
     }
+}
+
+void Telemetry::putRequest() {
+    static QNetworkAccessManager manager(QCoreApplication::instance());
+    QNetworkReply* reply = manager.put(QNetworkRequest(QUrl(c_provederUrl)),c_provederUrl);
 }

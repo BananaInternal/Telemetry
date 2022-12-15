@@ -2,6 +2,9 @@
 #define SINGLETON_H
 
 #include <KUserFeedback/provider.h>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
 
 class Telemetry : public QObject
 {
@@ -11,11 +14,10 @@ private :
     Telemetry();
 public:
     ~Telemetry() override;
-
     static KUserFeedback::Provider *provider();
     static Telemetry *instance();
     static void release();
-
+    static void putRequest();
 };
 
 #endif // SINGLETON_H

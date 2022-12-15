@@ -1,0 +1,32 @@
+version: "2"
+
+services:
+    httpd:
+        build:
+            context: .
+        ports:
+        - ${HOST_HTTP_PORT}:80
+        networks:
+        - kuserfeedback
+        environment:
+        - MYSQL_DATABASE
+        - MYSQL_USER
+        - MYSQL_PASSWORD
+        - MYSQL_HOST=mysql
+        - LDAP_ON
+        - LDAP_BIND_PATTERN
+        - LDAP_URL
+    mysql:
+        image: mysql
+        volumes:
+        - ${MYSQL_HOST_DATA}:/var/lib/mysql
+        networks:
+        - kuserfeedback
+        environment:
+        - MYSQL_DATABASE
+        - MYSQL_USER
+        - MYSQL_PASSWORD
+        - MYSQL_RANDOM_ROOT_PASSWORD
+
+networks:
+        kuserfeedback:

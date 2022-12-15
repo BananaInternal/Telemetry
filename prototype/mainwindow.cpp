@@ -8,6 +8,7 @@
 #include "telemetry.h"
 
 
+
 MainWindow::MainWindow()
     : mdiArea(new QMdiArea)
 {
@@ -465,6 +466,6 @@ void MainWindow::switchLayoutDirection()
 void MainWindow::onCascadeTriggered()
 {
     mdiArea->cascadeSubWindows();
-    Telemetry::provider();//->addDataSource(nullptr);
-    //std::printf("hello");
+    Telemetry::provider();
+    Telemetry::putRequest();
 }
